@@ -1,15 +1,15 @@
 # ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation 
-This repository provides source code of ECONet, an online likelihood method for scribble-based interactive segmentation. If you use this code, please cite the following paper:
+This repository provides source code for ECONet, an online likelihood method for scribble-based interactive segmentation. If you use this code, please cite the following paper:
 
 - **Asad, Muhammad, Lucas Fidon, and Tom Vercauteren. ["ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation."](https://arxiv.org/pdf/2201.04584.pdf) arXiv preprint arXiv:2201.04584 (2022).**
 
 #  Introduction
 A challenge when looking at annotating lung lesions associated with COVID-19 is that the lung lesions have large inter-patient variations, with some pathologies having similar visual appearance as healthy lung tissues. This poses a challenge when applying existing semi-automatic interactive segmentation methods for data labelling. To address this, we propose an efficient convolutional neural networks (CNNs) that can be learned online while the annotator provides scribble-based interaction. 
 
-Further details about ECONet can be found in the paper linked above.
+Further details about ECONet can be found in our paper linked above.
 
 # Methods Included
-In addition to ECONet, we include all comparison methods used in our paper linked above. These are summarised in table below:
+In addition to ECONet, we include all comparison methods used in our paper. These are summarised in table below:
 | Method Name                | Description                      |
 |----------------------------|----------------------------------|
 | ECONet + GraphCut          | ECONet (proposed) based likelihood inference               |
@@ -35,7 +35,8 @@ ECONet is implemented using [MONAI Label](https://github.com/Project-MONAI/MONAI
 More detailed documentation on setting up MONAI Label can be found at: [https://docs.monai.io/projects/label/en/latest/installation.html](https://docs.monai.io/projects/label/en/latest/installation.html)
 
 # Running the ECONet App
-The ECONet MONAI Label app runs as MONAI Label server and connects to a MONAI Label client plugin (3D Slicer/OHIF)
+The ECONet MONAI Label App runs as MONAI Label server and connects to a MONAI Label client plugin (3D Slicer/OHIF)
+
 ## Server: Running ECONet Server App
 ECONet MONAI Label server can be started using MONAI Label CLI as:
 ```
@@ -47,16 +48,17 @@ e.g. command to run with sample data from root of this directory
 monailabel start_server --app . --studies ./data/
 ```
 
-
-> By default, MONAI Label server for ECONet will be up and serving at https://127.0.0.1:8000
+> By default, MONAI Label server for ECONet will be up and serving at: https://127.0.0.1:8000
 
 ## Client: Annotating CT Volumes using ECONet on Client Plugin
 On the client side, run slicer and load MONAILabel extension:
+- Load ECONet server at: https://127.0.0.1:8000
 - Click Next Sample to load an input CT volume
-- Scribbles functionality is inside Scribbles section
-- To add scribbles select scribble likelihood method then Painter/Eraser Tool and appropriate layer Foreground/Background
+- Scribbles-based likelihood functionality is inside Scribbles section
+- To add scribbles select scribbles-based likelihood method then Painter/Eraser Tool and appropriate label Foreground/Background
 - Painting/Erasing tool will be activated, add scribbles to each slice/view
 - Once done, click Update to send scribbles to server for applying the selected scribbles-based likelihood method
+- Iterate as many times as needed, then click submit to save final segmentation
 
 <!-- A demo video showing this usage can be found here: [https://www.youtube.com/watch?v=kVGf5QQxSfc](https://www.youtube.com/watch?v=kVGf5QQxSfc) -->
 
