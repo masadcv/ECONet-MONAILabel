@@ -42,6 +42,12 @@ ECONet MONAI Label server can be started using MONAI Label CLI as:
 monailabel start_server --app /path/to/this/github/clone --studies /path/to/dataset/images
 ```
 
+e.g. command to run with sample data from root of this directory
+```
+monailabel start_server --app . --studies ./data/
+```
+
+
 > By default, MONAI Label server for ECONet will be up and serving at https://127.0.0.1:8000
 
 ## Client: Annotating CT Volumes using ECONet on Client Plugin
@@ -53,6 +59,8 @@ On the client side, run slicer and load MONAILabel extension:
 - Once done, click Update to send scribbles to server for applying the selected scribbles-based label refinement method
 
 <!-- A demo video showing this usage can be found here: [https://www.youtube.com/watch?v=kVGf5QQxSfc](https://www.youtube.com/watch?v=kVGf5QQxSfc) -->
+
+![econet-preview](./data/econet_preview.png)
 
 # Citing ECONet
 Pre-print of ECONet can be found at: [ECONet: ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation](https://arxiv.org/pdf/2201.04584.pdf)
