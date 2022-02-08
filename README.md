@@ -1,10 +1,10 @@
 # ECONet: ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation 
 This repository provides source code of ECONet, an online likelihood method for scribble-based interactive segmentation. If you use this code, please cite the following paper:
 
-Asad, Muhammad, Lucas Fidon, and Tom Vercauteren. ["ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation."](https://arxiv.org/pdf/2201.04584.pdf) arXiv preprint arXiv:2201.04584 (2022).
+- **Asad, Muhammad, Lucas Fidon, and Tom Vercauteren. ["ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation."](https://arxiv.org/pdf/2201.04584.pdf) arXiv preprint arXiv:2201.04584 (2022).**
 
-##  Brief introduction to ECONet
-A challenge we face when looking at annotating lung lesions associated with COVID-19 is that the lung lesions have large inter-patient variations, with some pathologies having similar visual appearance as healthy lung tissues. This poses a challenge when applying existing semi-automatic interactive segmentation methods for data labelling. To address this, we propose an efficient convolutional neural networks (CNNs) that can be learned online while the annotator provides scribble-based interaction. 
+#  Introduction
+A challenge when looking at annotating lung lesions associated with COVID-19 is that the lung lesions have large inter-patient variations, with some pathologies having similar visual appearance as healthy lung tissues. This poses a challenge when applying existing semi-automatic interactive segmentation methods for data labelling. To address this, we propose an efficient convolutional neural networks (CNNs) that can be learned online while the annotator provides scribble-based interaction. 
 
 Further details about ECONet can be found in the paper linked above.
 
@@ -12,11 +12,11 @@ Further details about ECONet can be found in the paper linked above.
 In addition to ECONet, we include all comparison methods used in our paper linked above. These are summarised in table below:
 | Method Name                | Description                      |
 |----------------------------|----------------------------------|
-| ECONet + GraphCut          | ECONet (proposed) from our paper               |
-| ECONet-Haar + GraphCut     | ECONet variant using handcrafted Haar-Like features             |
-| DybaORF-Haar + GraphCut    | DybaORF [1] using handcrafted Haar-Like features|
-| GMM + GraphCut             | GMM-based [2] likelihood generation method      |
-| Histogram + GraphCut       | Histogram-based [3] likelihood generation method|
+| ECONet + GraphCut          | ECONet (proposed) based likelihood inference               |
+| ECONet-Haar + GraphCut     | ECONet with Haar-Like features for likelihood inference             |
+| DybaORF-Haar + GraphCut    | DybaORF [1] with Haar-Like features for likelihood inference|
+| GMM + GraphCut             | GMM-based [2] likelihood generation      |
+| Histogram + GraphCut       | Histogram-based [3] likelihood generation |
 
 [1] Wang, Guotai, et al. "Dynamically balanced online random forests for interactive scribble-based segmentation." International Conference on Medical Image Computing and Computer-Assisted Intervention. Springer, Cham, 2016.
 
