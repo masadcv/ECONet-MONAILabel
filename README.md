@@ -1,4 +1,4 @@
-# ECONet: ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation 
+# ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation 
 This repository provides source code of ECONet, an online likelihood method for scribble-based interactive segmentation. If you use this code, please cite the following paper:
 
 - **Asad, Muhammad, Lucas Fidon, and Tom Vercauteren. ["ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation."](https://arxiv.org/pdf/2201.04584.pdf) arXiv preprint arXiv:2201.04584 (2022).**
