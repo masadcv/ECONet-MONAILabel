@@ -52,11 +52,11 @@ monailabel start_server --app . --studies ./data/
 
 ## Client: Annotating CT Volumes using ECONet on Client Plugin
 On the client side, run slicer and load MONAILabel extension:
-- Click Next Sample to load a sample with its initial segmentation
+- Click Next Sample to load an input CT volume
 - Scribbles functionality is inside Scribbles section
-- To add scribbles select Painter or Eraser Tool and appropriate layer Foreground or Background
+- To add scribbles select scribble likelihood method then Painter/Eraser Tool and appropriate layer Foreground/Background
 - Painting/Erasing tool will be activated, add scribbles to each slice/view
-- Once done, click Update to send scribbles to server for applying the selected scribbles-based label refinement method
+- Once done, click Update to send scribbles to server for applying the selected scribbles-based likelihood method
 
 <!-- A demo video showing this usage can be found here: [https://www.youtube.com/watch?v=kVGf5QQxSfc](https://www.youtube.com/watch?v=kVGf5QQxSfc) -->
 
