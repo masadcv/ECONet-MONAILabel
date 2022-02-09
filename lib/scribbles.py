@@ -2,18 +2,28 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from monai.transforms import (Compose, EnsureChannelFirstd, LoadImaged,
-                              ScaleIntensityRanged, Spacingd)
+from monai.transforms import (
+    Compose,
+    EnsureChannelFirstd,
+    LoadImaged,
+    ScaleIntensityRanged,
+    Spacingd,
+)
 from monailabel.interfaces.tasks.infer import InferTask, InferType
-from monailabel.scribbles.transforms import (AddBackgroundScribblesFromROId,
-                                             ApplyGraphCutOptimisationd)
+from monailabel.scribbles.transforms import (
+    AddBackgroundScribblesFromROId,
+    ApplyGraphCutOptimisationd,
+)
 from monailabel.transform.post import BoundingBoxd, Restored
 
-from lib.transforms import (ApplyGaussianSmoothing,
-                            MakeLikelihoodFromScribblesDybaORFd,
-                            MakeLikelihoodFromScribblesECONetd,
-                            MakeLikelihoodFromScribblesGMMd,
-                            MakeLikelihoodFromScribblesHistogramd, Timeit)
+from lib.transforms import (
+    ApplyGaussianSmoothing,
+    MakeLikelihoodFromScribblesDybaORFd,
+    MakeLikelihoodFromScribblesECONetd,
+    MakeLikelihoodFromScribblesGMMd,
+    MakeLikelihoodFromScribblesHistogramd,
+    Timeit,
+)
 
 
 class MyLikelihoodBasedSegmentor(InferTask):
@@ -63,11 +73,10 @@ class MyLikelihoodBasedSegmentor(InferTask):
             ),
             ApplyGaussianSmoothing(
                 image="image",
-                kernel_size = 3,
-                sigma = 1.0,
+                kernel_size=3,
+                sigma=1.0,
                 device="cuda",
             ),
-
         ]
 
     def post_transforms(self):
@@ -82,16 +91,16 @@ class MyLikelihoodBasedSegmentor(InferTask):
             Timeit(),
             Restored(keys="pred", ref_image="image"),
             BoundingBoxd(keys="pred", result="result", bbox="bbox"),
-
         ]
+
 
 class ECONetPlusGraphCut(MyLikelihoodBasedSegmentor):
     """
-    Defines Efficient Convolutional Online Likelihood Network (ECONet) based Online Likelihood training and inference method for 
+    Defines Efficient Convolutional Online Likelihood Network (ECONet) based Online Likelihood training and inference method for
     COVID-19 lung lesion segmentation based on the following paper:
 
-    Asad, Muhammad, Lucas Fidon, and Tom Vercauteren. "" ECONet: Efficient Convolutional Online Likelihood Network 
-    for Scribble-based Interactive Segmentation." 
+    Asad, Muhammad, Lucas Fidon, and Tom Vercauteren. "" ECONet: Efficient Convolutional Online Likelihood Network
+    for Scribble-based Interactive Segmentation."
     To be reviewed (preprint: https://arxiv.org/pdf/2201.04584.pdf).
 
     This task takes as input 1) original image volume and 2) scribbles from user
@@ -135,7 +144,7 @@ class ECONetPlusGraphCut(MyLikelihoodBasedSegmentor):
         )
         self.model = model
         self.loss = loss
-        self.epochs =epochs
+        self.epochs = epochs
         self.lr = lr
         self.lr_step = lr_step
         self.dropout = dropout
@@ -144,7 +153,6 @@ class ECONetPlusGraphCut(MyLikelihoodBasedSegmentor):
         self.num_filters = num_filters
         self.train_feat = train_feat
         self.model_path = model_path
-        
 
     def inferer(self):
         return Compose(
@@ -175,12 +183,13 @@ class ECONetPlusGraphCut(MyLikelihoodBasedSegmentor):
             ]
         )
 
+
 class DybaORFPlusGraphCut(MyLikelihoodBasedSegmentor):
     """
-    Defines Dynamically Balanced Online Random Forest (DybaORF) based Online Likelihood training and inference method for 
+    Defines Dynamically Balanced Online Random Forest (DybaORF) based Online Likelihood training and inference method for
     COVID-19 lung lesion segmentation based on the following paper:
 
-    Wang, Guotai, et al. "Dynamically balanced online random forests for interactive scribble-based segmentation." 
+    Wang, Guotai, et al. "Dynamically balanced online random forests for interactive scribble-based segmentation."
     International Conference on Medical Image Computing and Computer-Assisted Intervention. Springer, Cham, 2016.
 
     This task takes as input 1) original image volume and 2) scribbles from user
@@ -199,11 +208,11 @@ class DybaORFPlusGraphCut(MyLikelihoodBasedSegmentor):
         lamda=5.0,
         sigma=0.1,
         kernel_size=9,
-        criterion = "entropy",
-        num_trees = 50,
-        max_tree_depth = 20,
-        min_samples_split = 6,
-        model_path = None,
+        criterion="entropy",
+        num_trees=50,
+        max_tree_depth=20,
+        min_samples_split=6,
+        model_path=None,
         config=None,
     ):
         super().__init__(
@@ -221,7 +230,6 @@ class DybaORFPlusGraphCut(MyLikelihoodBasedSegmentor):
         self.max_tree_depth = max_tree_depth
         self.min_samples_split = min_samples_split
         self.model_path = model_path
-        
 
     def inferer(self):
         return Compose(
@@ -236,7 +244,7 @@ class DybaORFPlusGraphCut(MyLikelihoodBasedSegmentor):
                     kernel_size=self.kernel_size,
                     criterion=self.criterion,
                     num_trees=self.num_trees,
-                    max_tree_depth = self.max_tree_depth,
+                    max_tree_depth=self.max_tree_depth,
                     min_samples_split=self.min_samples_split,
                     use_argmax=False,
                     model_path=self.model_path,
@@ -246,11 +254,12 @@ class DybaORFPlusGraphCut(MyLikelihoodBasedSegmentor):
             ]
         )
 
+
 class GMMPlusGraphCut(MyLikelihoodBasedSegmentor):
     """
     Defines Gaussian Mixture Model (GMM) based Online Likelihood generation method for COVID-19 lung lesion segmentation based on the following paper:
 
-    Rother, Carsten, Vladimir Kolmogorov, and Andrew Blake. "" GrabCut" interactive foreground extraction using iterated graph cuts." 
+    Rother, Carsten, Vladimir Kolmogorov, and Andrew Blake. "" GrabCut" interactive foreground extraction using iterated graph cuts."
     ACM transactions on graphics (TOG) 23.3 (2004): 309-314.
 
     This task takes as input 1) original image volume and 2) scribbles from user
@@ -298,11 +307,12 @@ class GMMPlusGraphCut(MyLikelihoodBasedSegmentor):
             ]
         )
 
+
 class HistogramPlusGraphCut(MyLikelihoodBasedSegmentor):
     """
     Defines Histogram-based Online Likelihood generation method for COVID-19 lung lesion segmentation based on the following paper:
 
-    Boykov, Yuri Y., and M-P. Jolly. "Interactive graph cuts for optimal boundary & region segmentation of objects in ND images." 
+    Boykov, Yuri Y., and M-P. Jolly. "Interactive graph cuts for optimal boundary & region segmentation of objects in ND images."
     Proceedings eighth IEEE international conference on computer vision. ICCV 2001. Vol. 1. IEEE, 2001.
 
     This task takes as input 1) original image volume and 2) scribbles from user
@@ -320,9 +330,9 @@ class HistogramPlusGraphCut(MyLikelihoodBasedSegmentor):
         pix_dim=(2.0, 2.0, 2.0),
         lamda=5.0,
         sigma=0.1,
-        alpha_bg = 1, 
-        alpha_fg = 1, 
-        bins = 128,
+        alpha_bg=1,
+        alpha_fg=1,
+        bins=128,
         config=None,
     ):
         super().__init__(
@@ -351,12 +361,8 @@ class HistogramPlusGraphCut(MyLikelihoodBasedSegmentor):
                     normalise=True,
                     alpha_bg=self.alpha_bg,
                     alpha_fg=self.alpha_fg,
-                    bins=self.bins
+                    bins=self.bins,
                 ),
                 Timeit(),
             ]
         )
-
-
-
-

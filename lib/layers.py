@@ -41,7 +41,7 @@ class Conv3dBNAct(nn.Sequential):
         super().__init__(*modules)
 
 
-# Help on Gaussian Smoother from: 
+# Help on Gaussian Smoother from:
 # https://discuss.pytorch.org/t/is-there-anyway-to-do-gaussian-filtering-for-an-image-2d-3d-in-pytorch/12351/8
 def initialise_gaussian_weights(channels, kernel_size, sigma, dims):
     if isinstance(kernel_size, numbers.Number):
@@ -201,7 +201,9 @@ class MyDiceCELoss(_Loss):
 
     def forward(self, input, target):
         if len(input.shape) != len(target.shape):
-            raise ValueError("the number of dimensions for input and target should be the same.")
+            raise ValueError(
+                "the number of dimensions for input and target should be the same."
+            )
 
         dice_loss = self.dice(input, target)
         ce_loss = self.ce(input, target)

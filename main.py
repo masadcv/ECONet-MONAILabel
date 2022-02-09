@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 class MyApp(MONAILabelApp):
     def __init__(self, app_dir, studies, conf):
-        
+
         # path to save model for current sample
         model_dir = os.path.join(app_dir, "model")
         os.makedirs(model_dir, exist_ok=True)
@@ -27,7 +27,7 @@ class MyApp(MONAILabelApp):
         if os.path.exists(self.online_model_path):
             os.unlink(self.online_model_path)
 
-        # intensity and spacing options 
+        # intensity and spacing options
         self.intensity_range = (-1000, 400, 0.0, 1.0, True)
         self.pix_dim = (2.0, 2.0, 2.0)
 
@@ -85,7 +85,7 @@ class MyApp(MONAILabelApp):
                 sigma=self.sigma,
             ),
         }
-    
+
     def next_sample(self, request):
         # clear ECONet weights when new sample is loaded
         if hasattr(self, "online_model_path") and os.path.exists(

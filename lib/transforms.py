@@ -15,11 +15,13 @@ from skimage.util.shape import view_as_windows
 from sklearn.ensemble import RandomForestClassifier
 
 from lib.layers import GaussianSmoothing2d, GaussianSmoothing3d, MyDiceCELoss
-from lib.utils import (get_eps, make_likelihood_image_gmm,
-                       make_likelihood_image_histogram)
+from lib.utils import (
+    get_eps,
+    make_likelihood_image_gmm,
+    make_likelihood_image_histogram,
+)
 
-from .online_model import (ECONetFCNHaarFeatures,
-                           ECONetFCNLearnedFeatures)
+from .online_model import ECONetFCNHaarFeatures, ECONetFCNLearnedFeatures
 
 logger = logging.getLogger(__name__)
 
@@ -72,7 +74,6 @@ class MakeLikelihoodFromScribblesECONetd(MyInteractiveSegmentationTransform):
         train_feat: bool = True,
         use_argmax: bool = False,
         model_path: str = None,
-        # loss_threshold: float = 0.005,
         use_amp: bool = False,
         device: str = "cuda",
     ) -> None:
@@ -94,7 +95,6 @@ class MakeLikelihoodFromScribblesECONetd(MyInteractiveSegmentationTransform):
         self.train_feat = train_feat
         self.use_argmax = use_argmax
         self.model_path = model_path
-        # self.loss_threshold = loss_threshold
         self.use_amp = use_amp
         self.device = device
 
@@ -151,7 +151,7 @@ class MakeLikelihoodFromScribblesECONetd(MyInteractiveSegmentationTransform):
             "Training using model features {} and loss {}".format(self.model, self.loss)
         )
 
-        # load selected model module
+        # load selected model module [ECONet (FEAT), ECONet-Haar (HAAR)]
         if self.model == "HAAR":
             # haar-like hand-crafted features ECONet-Haar-Like
             model = ECONetFCNHaarFeatures(
@@ -224,7 +224,7 @@ class MakeLikelihoodFromScribblesECONetd(MyInteractiveSegmentationTransform):
         # help on imbalanced cross-entropy from:
         # https://www.tensorflow.org/tutorials/structured_data/imbalanced_data#calculate_class_weights
         number_of_samples = [np.sum(all_sel_labels == x) for x in range(num_classes)]
-        
+
         # if even one class missing, then skip weighting
         skip_weighting = 0 in number_of_samples
         if not skip_weighting:
@@ -252,7 +252,7 @@ class MakeLikelihoodFromScribblesECONetd(MyInteractiveSegmentationTransform):
         logging.info("Samples per class:{}".format(number_of_samples))
         logging.info("Weights per class: {}".format(weight_for_classes))
 
-        # load the loss function to used from [CrossEntropy, DICE+CrossEntropy]
+        # load the loss function to used from [CrossEntropy (CE), DICE+CrossEntropy (DICECE)]
         reduction = "mean"
         if self.loss == "CE":
             loss_func = torch.nn.CrossEntropyLoss(
@@ -290,9 +290,6 @@ class MakeLikelihoodFromScribblesECONetd(MyInteractiveSegmentationTransform):
             optim.zero_grad()
             pbar.set_description("Online Model Loss: %f" % loss.item())
 
-            # if loss.item() < self.loss_threshold:
-                # stop training if loss criteria met
-                # break
             if self.lr_step:
                 scheduler.step()
 
@@ -400,7 +397,7 @@ class MakeLikelihoodFromScribblesDybaORFd(MyInteractiveSegmentationTransform):
         scribbles = np.squeeze(scribbles)
 
         inchannels, depth, height, width = features.shape
-        
+
         # extract patches and select only relevant patches with scribble labels for online training
         features_patches = view_as_windows(features, (inchannels, 1, 1, 1), step=1)
         features_patches = np.squeeze(features_patches, axis=0)
@@ -442,7 +439,7 @@ class MakeLikelihoodFromScribblesDybaORFd(MyInteractiveSegmentationTransform):
             )
         )
 
-        # load RF model module from sklearn
+        # load RandomForest module from sklearn
         model = RandomForestClassifier(
             n_estimators=self.num_trees,
             criterion=self.criterion,
@@ -656,7 +653,12 @@ class ApplyGaussianSmoothing(MyInteractiveSegmentationTransform):
 
 
 class Timeit(MyInteractiveSegmentationTransform):
-    def __init__(self, time_key: str = "time", tic_key: str = "tic", meta_key_postfix: str = "meta_dict")-> None:
+    def __init__(
+        self,
+        time_key: str = "time",
+        tic_key: str = "tic",
+        meta_key_postfix: str = "meta_dict",
+    ) -> None:
         super().__init__(meta_key_postfix)
         self.time_key = time_key
         self.tic_key = tic_key

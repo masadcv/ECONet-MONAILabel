@@ -20,13 +20,26 @@ def sklearn_fit_gmm(image, scrib, scribbles_bg_label, scribbles_fg_label, n_comp
 
     return bg, fg
 
-def learn_and_apply_gmm_sklearn(image, scrib, scribbles_bg_label, scribbles_fg_label, mixture_size):
+
+def learn_and_apply_gmm_sklearn(
+    image, scrib, scribbles_bg_label, scribbles_fg_label, mixture_size
+):
     # based on https://github.com/jiviteshjain/grabcut/blob/main/src/grabcut.ipynb
-    bg_gmm, fg_gmm = sklearn_fit_gmm(image, scrib, scribbles_bg_label, scribbles_fg_label, mixture_size)
+    bg_gmm, fg_gmm = sklearn_fit_gmm(
+        image, scrib, scribbles_bg_label, scribbles_fg_label, mixture_size
+    )
 
     # add empty channel to image and scrib to be inline with pytorch layout
-    bg_prob = bg_gmm.score_samples(image.reshape((-1, 1))).reshape(image.shape).astype(np.float32)
-    fg_prob = fg_gmm.score_samples(image.reshape((-1, 1))).reshape(image.shape).astype(np.float32)
+    bg_prob = (
+        bg_gmm.score_samples(image.reshape((-1, 1)))
+        .reshape(image.shape)
+        .astype(np.float32)
+    )
+    fg_prob = (
+        fg_gmm.score_samples(image.reshape((-1, 1)))
+        .reshape(image.shape)
+        .astype(np.float32)
+    )
 
     bg_prob = np.exp(bg_prob)
     fg_prob = np.exp(fg_prob)
@@ -36,7 +49,9 @@ def learn_and_apply_gmm_sklearn(image, scrib, scribbles_bg_label, scribbles_fg_l
     return gmm_output
 
 
-def learn_and_apply_gmm_monai(image, scrib, scribbles_bg_label, scribbles_fg_label, mixture_size):
+def learn_and_apply_gmm_monai(
+    image, scrib, scribbles_bg_label, scribbles_fg_label, mixture_size
+):
     # this function is limited to binary segmentation at the moment
     n_classes = 2
 
@@ -74,7 +89,10 @@ def learn_and_apply_gmm_monai(image, scrib, scribbles_bg_label, scribbles_fg_lab
 
     # initialise our GMM
     gmm = GaussianMixtureModel(
-        image.size(1), mixture_count=n_classes, mixture_size=mixture_size, verbose_build=False
+        image.size(1),
+        mixture_count=n_classes,
+        mixture_size=mixture_size,
+        verbose_build=False,
     )
     # gmm.reset()
 
@@ -97,7 +115,7 @@ def make_likelihood_image_gmm(
 ):
     # learn gmm and apply to image, return output label prob
     try:
-        # this may fail if MONAI Cpp Extensions are not loaded properly 
+        # this may fail if MONAI Cpp Extensions are not loaded properly
         retprob = learn_and_apply_gmm_monai(
             image=image,
             scrib=scrib,
@@ -122,7 +140,16 @@ def make_likelihood_image_gmm(
     return retprob
 
 
-def make_likelihood_image_histogram(image, scrib, scribbles_bg_label, scribbles_fg_label, return_label=False, alpha_bg=1, alpha_fg=1, bins=32):
+def make_likelihood_image_histogram(
+    image,
+    scrib,
+    scribbles_bg_label,
+    scribbles_fg_label,
+    return_label=False,
+    alpha_bg=1,
+    alpha_fg=1,
+    bins=32,
+):
     # normalise image in range [0, 1] if needed
     min_img = np.min(image)
     max_img = np.max(image)
@@ -131,7 +158,13 @@ def make_likelihood_image_histogram(image, scrib, scribbles_bg_label, scribbles_
 
     # generate histograms for background/foreground
     bg_hist, fg_hist, bin_edges = make_histograms(
-        image, scrib, scribbles_bg_label, scribbles_fg_label, alpha_bg=alpha_bg, alpha_fg=alpha_fg, bins=bins
+        image,
+        scrib,
+        scribbles_bg_label,
+        scribbles_fg_label,
+        alpha_bg=alpha_bg,
+        alpha_fg=alpha_fg,
+        bins=bins,
     )
 
     # lookup values for each voxel for generating background/foreground probabilities
