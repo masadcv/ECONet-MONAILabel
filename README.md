@@ -1,7 +1,7 @@
 # ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation 
 This repository provides source code for ECONet, an online likelihood method for scribble-based interactive segmentation. If you use this code, please cite the following paper:
 
-- **Asad, Muhammad, Lucas Fidon, and Tom Vercauteren. ["ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation."](https://arxiv.org/pdf/2201.04584.pdf) arXiv preprint arXiv:2201.04584 (2022).**
+- **Asad, Muhammad, Lucas Fidon, and Tom Vercauteren. ["ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation."](https://arxiv.org/pdf/2201.04584.pdf), Medical Imaging with Deep Learning (MIDL) 2022.**
 
 #  Introduction
 A challenge when looking at annotating lung lesions associated with COVID-19 is that the lung lesions have large inter-patient variations, with some pathologies having similar visual appearance as healthy lung tissues. This poses a challenge when applying existing semi-automatic interactive segmentation methods for data labelling. To address this, we propose an efficient convolutional neural networks (CNNs) that can be learned online while the annotator provides scribble-based interaction. 
@@ -75,10 +75,12 @@ If you use ECONet in your research, then please cite:
 
 BibTeX:
 ```
-@article{asad2022econet,
-  title={ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation},
-  author={Asad, Muhammad and Fidon, Lucas and Vercauteren, Tom},
-  journal={arXiv preprint arXiv:2201.04584},
-  year={2022}
+@inproceedings{
+asad2022econet,
+title={{ECON}et: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation},
+author={Muhammad Asad and Lucas Fidon and Tom Vercauteren},
+booktitle={Medical Imaging with Deep Learning},
+year={2022},
+url={https://openreview.net/forum?id=9xtE2AgD_Cc}
 }
 ```
