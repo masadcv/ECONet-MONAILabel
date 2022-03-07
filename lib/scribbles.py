@@ -17,6 +17,7 @@ from monailabel.scribbles.transforms import (
 from monailabel.transform.post import BoundingBoxd, Restored
 
 from lib.transforms import (
+    AddBackgroundScribblesFromROIWithDropfracd,
     ApplyGaussianSmoothing,
     MakeLikelihoodFromScribblesDybaORFd,
     MakeLikelihoodFromScribblesECONetd,
@@ -40,7 +41,7 @@ class MyLikelihoodBasedSegmentor(InferTask):
         super().__init__(
             path=None,
             network=None,
-            labels="lesions",
+            labels="region 7",
             type=InferType.SCRIBBLES,
             dimension=dimension,
             description=description,
@@ -55,8 +56,9 @@ class MyLikelihoodBasedSegmentor(InferTask):
         return [
             LoadImaged(keys=["image", "label"]),
             EnsureChannelFirstd(keys=["image", "label"]),
-            AddBackgroundScribblesFromROId(
-                scribbles="label", scribbles_bg_label=2, scribbles_fg_label=3
+            # AddBackgroundScribblesFromROId(
+            AddBackgroundScribblesFromROIWithDropfracd(
+                scribbles="label", scribbles_bg_label=2, scribbles_fg_label=3, drop_frac=0.98
             ),
             Spacingd(
                 keys=["image", "label"],

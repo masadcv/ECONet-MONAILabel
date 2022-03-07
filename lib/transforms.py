@@ -683,3 +683,71 @@ class Timeit(MyInteractiveSegmentationTransform):
             d[self.tic_key] = time.time()
 
         return d
+
+class AddBackgroundScribblesFromROIWithDropfracd(MyInteractiveSegmentationTransform):
+    def __init__(
+        self,
+        scribbles: str,
+        roi_key: str = "roi",
+        meta_key_postfix: str = "meta_dict",
+        scribbles_bg_label: int = 2,
+        scribbles_fg_label: int = 3,
+        drop_frac: float = 0.9,
+    ) -> None:
+        super().__init__(meta_key_postfix)
+        self.scribbles = scribbles
+        self.roi_key = roi_key
+        self.scribbles_bg_label = scribbles_bg_label
+        self.scribbles_fg_label = scribbles_fg_label
+        self.drop_frac = drop_frac
+
+    def __call__(self, data):
+        d = dict(data)
+
+        # read relevant terms from data
+        scribbles = self._fetch_data(d, self.scribbles)
+
+        # get any existing roi information and apply it to scribbles, skip otherwise
+        selected_roi = d.get(self.roi_key, None)
+        if selected_roi:
+            mask = np.ones_like(scribbles).astype(np.bool)
+            mask[
+                :,
+                selected_roi[0] : selected_roi[1],
+                selected_roi[2] : selected_roi[3],
+                selected_roi[4] : selected_roi[5],
+            ] = 0
+
+            if self.drop_frac:
+                drop_mask = np.random.uniform(size=mask.shape)
+                drop_mask = (drop_mask >= self.drop_frac)
+
+                mask = mask & drop_mask
+
+
+            # prune outside roi region as bg scribbles
+            scribbles[mask] = self.scribbles_bg_label
+
+            # if no foreground scribbles found, then add a scribble at center of roi
+            if not np.any(scribbles == self.scribbles_fg_label):
+                # issue a warning - the algorithm should still work
+                logging.info(
+                    "warning: no foreground scribbles received with label {}, adding foreground scribbles to ROI centre".format(
+                        self.scribbles_fg_label
+                    )
+                )
+                offset = 5
+
+                cx = int((selected_roi[0] + selected_roi[1]) / 2)
+                cy = int((selected_roi[2] + selected_roi[3]) / 2)
+                cz = int((selected_roi[4] + selected_roi[5]) / 2)
+
+                # add scribbles at center of roi
+                scribbles[
+                    :, cx - offset : cx + offset, cy - offset : cy + offset, cz - offset : cz + offset
+                ] = self.scribbles_fg_label
+
+        # return new scribbles
+        d[self.scribbles] = scribbles
+
+        return d
