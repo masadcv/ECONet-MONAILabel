@@ -7,7 +7,7 @@ import time
 from typing import List
 
 import numpy as np
-import pt_haarfeatures
+import torchhaarfeatures
 import torch
 import tqdm
 from monailabel.scribbles.transforms import InteractiveSegmentationTransform
@@ -381,7 +381,7 @@ class MakeLikelihoodFromScribblesDybaORFd(MyInteractiveSegmentationTransform):
         scribbles = self._fetch_data(d, self.scribbles)
 
         # load haar-like feature extractor
-        haar_feature_extractor = pt_haarfeatures.HaarFeatures3d(
+        haar_feature_extractor = torchhaarfeatures.HaarFeatures3d(
             kernel_size=self.kernel_size,
             padding="same",
             stride=1,

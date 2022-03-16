@@ -1,4 +1,4 @@
-import pt_haarfeatures
+import torchhaarfeatures
 import torch
 import torch.nn as nn
 
@@ -96,7 +96,7 @@ class ECONetFCNHaarFeatures(nn.Module):
         super().__init__()
 
         # add haar-like feature extractor
-        self.haarfeatureextactor = pt_haarfeatures.HaarFeatures3d(
+        self.haarfeatureextactor = torchhaarfeatures.HaarFeatures3d(
             kernel_size=kernel_size,
             padding=haar_padding,
             stride=1,
