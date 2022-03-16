@@ -6,7 +6,7 @@ This repository provides source code for ECONet, an online likelihood method for
 #  Introduction
 A challenge when looking at annotating lung lesions associated with COVID-19 is that the lung lesions have large inter-patient variations, with some pathologies having similar visual appearance as healthy lung tissues. This poses a challenge when applying existing semi-automatic interactive segmentation methods for data labelling. To address this, we propose an efficient convolutional neural networks (CNNs) that can be learned online while the annotator provides scribble-based interaction. 
 
-![econet-flowchart](https://raw.githubusercontent.com/masadcv/ECONet-MONAILabel/main/data/model-ECONetFlowchartHorizontal.png)
+![econet-flowchart](https://raw.githubusercontent.com/masadcv/ECONet-MONAILabel/main/data/model-ECONetFlowchart.png)
 
 The flowchart above shows (a) patch-based online training of ECONet where a patch of size K $\times$ K $\times$ K, extracted around a scribble voxel, is used. The loss function in paper is used along with label from scribble to learn the model parameters. (b) shows online likelihood inference using ECONet as fully convolutional network on full image volume.
 
