@@ -67,6 +67,7 @@ class MakeLikelihoodFromScribblesECONetd(MyInteractiveSegmentationTransform):
         epochs: int = 80,
         lr: float = 0.1,
         lr_step: float = [0.1],
+        lr_factor: float = 0.1, 
         dropout: float = 0.2,
         hidden_layers: List[int] = [16, 8],
         kernel_size: int = 9,
@@ -88,6 +89,7 @@ class MakeLikelihoodFromScribblesECONetd(MyInteractiveSegmentationTransform):
         self.epochs = epochs
         self.lr = lr
         self.lr_step = lr_step
+        self.lr_factor = lr_factor
         self.kernel_size = kernel_size
         self.num_filters = num_filters
         self.hidden_layers = hidden_layers
@@ -217,7 +219,7 @@ class MakeLikelihoodFromScribblesECONetd(MyInteractiveSegmentationTransform):
             scheduler = torch.optim.lr_scheduler.MultiStepLR(
                 optim,
                 [int(self.epochs * lrstep) for lrstep in list(self.lr_step)],
-                gamma=self.lr,
+                gamma=self.lr_factor,
             )
 
         # calculate weights for scribbles-balanced cross-entropy
