@@ -64,7 +64,7 @@ On the client side, run slicer and load MONAILabel extension:
 - Once done, click Update to send scribbles to server for applying the selected scribbles-based likelihood method
 - Iterate as many times as needed, then click submit to save final segmentation
 
-<!-- A demo video showing this usage can be found here: [https://www.youtube.com/watch?v=kVGf5QQxSfc](https://www.youtube.com/watch?v=kVGf5QQxSfc) -->
+ Demo video showing ECONet usage can be accessed here: [https://www.youtube.com/watch?v=lQEDCx9Mp7A](https://www.youtube.com/watch?v=lQEDCx9Mp7A)
 
 ![econet-preview](https://raw.githubusercontent.com/masadcv/ECONet-MONAILabel/main/data/econet_preview.png)
 
