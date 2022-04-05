@@ -2,29 +2,18 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from monai.transforms import (
-    Compose,
-    EnsureChannelFirstd,
-    LoadImaged,
-    ScaleIntensityRanged,
-    Spacingd,
-)
+from monai.transforms import (Compose, EnsureChannelFirstd, LoadImaged,
+                              ScaleIntensityRanged, Spacingd)
 from monailabel.interfaces.tasks.infer import InferTask, InferType
-from monailabel.scribbles.transforms import (
-    AddBackgroundScribblesFromROId,
-    ApplyGraphCutOptimisationd,
-)
+from monailabel.scribbles.transforms import AddBackgroundScribblesFromROId
 from monailabel.transform.post import BoundingBoxd, Restored
 
-from lib.transforms import (
-    AddBackgroundScribblesFromROIWithDropfracd,
-    ApplyGaussianSmoothing,
-    MakeLikelihoodFromScribblesDybaORFd,
-    MakeLikelihoodFromScribblesECONetd,
-    MakeLikelihoodFromScribblesGMMd,
-    MakeLikelihoodFromScribblesHistogramd,
-    Timeit,
-)
+from lib.transforms import (AddBackgroundScribblesFromROIWithDropfracd,
+                            ApplyGaussianSmoothing, ApplyGraphCutOptimisationd,
+                            MakeLikelihoodFromScribblesDybaORFd,
+                            MakeLikelihoodFromScribblesECONetd,
+                            MakeLikelihoodFromScribblesGMMd,
+                            MakeLikelihoodFromScribblesHistogramd, Timeit)
 
 
 class MyLikelihoodBasedSegmentor(InferTask):
