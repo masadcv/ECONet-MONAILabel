@@ -761,7 +761,7 @@ class ApplyGraphCutOptimisationd(InteractiveSegmentationTransform):
 
     This can be used in conjuction with any Make*Unaryd transform
     (e.g. MakeISegUnaryd from above for implementing ISeg unary term).
-    It optimises a typical energy function for interactive segmentation methods using SimpleCRF's GraphCut method,
+    It optimises a typical energy function for interactive segmentation methods using numpymaxflow's GraphCut method,
     e.g. Equation 5 from https://arxiv.org/pdf/1710.04043.pdf.
 
     Usage Example::
@@ -828,12 +828,9 @@ class ApplyGraphCutOptimisationd(InteractiveSegmentationTransform):
         # # attempt to unfold probability term
         # unary_term = self._unfold_prob(unary_term, axis=0)
 
-        # prepare data for SimpleCRF's GraphCut
-        unary_term = torch.from_numpy(unary_term).unsqueeze(0)
-        pairwise_term = torch.from_numpy(pairwise_term).unsqueeze(0)
-
+        # prepare data for numpymaxflow's GraphCut
         # run GraphCut
-        post_proc_label = maxflow(pairwise_term, unary_term, lamda=self.lamda, sigma=self.sigma).squeeze(0).numpy()
+        post_proc_label = maxflow(pairwise_term, unary_term, lamda=self.lamda, sigma=self.sigma)
 
         d[self.post_proc_label] = post_proc_label
 

@@ -4,4 +4,4 @@ monailabel==0.3.0
 ninja==1.10.2.3
 scikit-learn==1.0.2
 torchhaarfeatures==0.0.2
-torchmaxflow==0.0.4
+numpymaxflow==0.0.2

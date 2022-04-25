@@ -2,7 +2,7 @@ import logging
 
 import numpy as np
 import torch
-import torchmaxflow
+import numpymaxflow
 from monai.networks.layers import GaussianMixtureModel
 from monailabel.scribbles.utils import make_histograms
 from sklearn.mixture import GaussianMixture
@@ -14,7 +14,7 @@ def get_eps(data):
 def maxflow(image, prob, lamda=5, sigma=0.1):
     # lamda: weight of smoothing term
     # sigma: std of intensity values
-    return torchmaxflow.maxflow(image, prob, lamda, sigma)
+    return numpymaxflow.maxflow(image, prob, lamda, sigma)
 
 def sklearn_fit_gmm(image, scrib, scribbles_bg_label, scribbles_fg_label, n_components):
     bg = GaussianMixture(n_components=n_components)

@@ -97,7 +97,7 @@ class ECONetPlusGraphCut(MyLikelihoodBasedSegmentor):
     This task takes as input 1) original image volume and 2) scribbles from user
     indicating foreground and background regions. A likelihood volume is learned and inferred using ECONet method.
 
-    SimpleCRF's GraphCut layer is used to regularise the resulting likelihood, where unaries come from likelihood
+    numpymaxflow's GraphCut layer is used to regularise the resulting likelihood, where unaries come from likelihood
     and pairwise is the original input volume.
 
     This also implements variations of ECONet with hand-crafted features, referred as ECONet-Haar-Like in the paper.
@@ -186,7 +186,7 @@ class DybaORFPlusGraphCut(MyLikelihoodBasedSegmentor):
     This task takes as input 1) original image volume and 2) scribbles from user
     indicating foreground and background regions. A likelihood volume is learned and inferred using DybaORF-Haar-Like method.
 
-    SimpleCRF's GraphCut layer is used to regularise the resulting likelihood, where unaries come from likelihood
+    numpymaxflow's GraphCut layer is used to regularise the resulting likelihood, where unaries come from likelihood
     and pairwise is the original input volume.
     """
 
@@ -256,7 +256,7 @@ class GMMPlusGraphCut(MyLikelihoodBasedSegmentor):
     This task takes as input 1) original image volume and 2) scribbles from user
     indicating foreground and background regions. A likelihood volume is generated using GMM method.
 
-    SimpleCRF's GraphCut layer is used to regularise the resulting likelihood, where unaries come from likelihood
+    numpymaxflow's GraphCut layer is used to regularise the resulting likelihood, where unaries come from likelihood
     and pairwise is the original input volume.
     """
 
@@ -309,7 +309,7 @@ class HistogramPlusGraphCut(MyLikelihoodBasedSegmentor):
     This task takes as input 1) original image volume and 2) scribbles from user
     indicating foreground and background regions. A likelihood volume is generated using histogram method.
 
-    SimpleCRF's GraphCut layer is used to regularise the resulting likelihood, where unaries come from likelihood
+    numpymaxflow's GraphCut layer is used to regularise the resulting likelihood, where unaries come from likelihood
     and pairwise is the original input volume.
     """
 
