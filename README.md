@@ -1,7 +1,7 @@
 # ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation 
 This repository provides source code for ECONet, an online likelihood method for scribble-based interactive segmentation. If you use this code, please cite the following paper:
 
-- **Asad, Muhammad, Lucas Fidon, and Tom Vercauteren. ["ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation."](https://arxiv.org/pdf/2201.04584.pdf), Medical Imaging with Deep Learning (MIDL) 2022.**
+- **Asad, Muhammad, Lucas Fidon, and Tom Vercauteren. ["ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation."](https://openreview.net/forum?id=9xtE2AgD_Cc), Medical Imaging with Deep Learning (MIDL) 2022.**
 
 #  Introduction
 A challenge when looking at annotating lung lesions associated with COVID-19 is that the lung lesions have large inter-patient variations, with some pathologies having similar visual appearance as healthy lung tissues. This poses a challenge when applying existing semi-automatic interactive segmentation methods for data labelling. To address this, we propose an efficient convolutional neural networks (CNNs) that can be learned online while the annotator provides scribble-based interaction. 
@@ -69,7 +69,7 @@ On the client side, run slicer and load MONAILabel extension:
 ![econet-preview](https://raw.githubusercontent.com/masadcv/ECONet-MONAILabel/main/data/econet_preview.png)
 
 # Citing ECONet
-Pre-print of ECONet can be found at: [ECONet: ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation](https://arxiv.org/pdf/2201.04584.pdf)
+Pre-print of ECONet can be found at: [ECONet: ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation](https://openreview.net/forum?id=9xtE2AgD_Cc)
 
 If you use ECONet in your research, then please cite:
 
