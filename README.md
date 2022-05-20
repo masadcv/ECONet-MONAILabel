@@ -47,6 +47,8 @@ If using older than the current released version of MONAI Label, you will need t
 
 Note: make sure to remove any MONAI Label plugins that were installed from Extension Manager before following the steps above for manual installation
 
+See [this post](https://discourse.slicer.org/t/how-to-start-with-monailabel-for-new-models/21063/31) for step by step guide on how to do the above Slicer plugin installation
+
 # Running the ECONet App
 The ECONet MONAI Label App runs as MONAI Label server and connects to a MONAI Label client plugin (3D Slicer/OHIF)
 
