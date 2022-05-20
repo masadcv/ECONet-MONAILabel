@@ -38,7 +38,7 @@ ECONet is implemented using [MONAI Label](https://github.com/Project-MONAI/MONAI
 
 More detailed documentation on setting up MONAI Label can be found at: [https://docs.monai.io/projects/label/en/latest/installation.html](https://docs.monai.io/projects/label/en/latest/installation.html)
 
-## Slicer Plugins Installation
+## Slicer Plugin Installation
 If using older than the current released version of MONAI Label, you will need to install corresponding MONAI Label Slicer plugin using pip package instead of using Slicer Extension Manager. The following steps guide on how this can be done:
 
 1. Download MONAI Label Slicer plugins from pip package into a known location: `monailabel plugins --download --name slicer --output ./MONAILabelPlugin`
