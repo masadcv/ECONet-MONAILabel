@@ -3,7 +3,10 @@ This repository provides source code for ECONet, an online likelihood method for
 
 - **Asad, Muhammad, Lucas Fidon, and Tom Vercauteren. ["ECONet: Efficient Convolutional Online Likelihood Network for Scribble-based Interactive Segmentation."](https://openreview.net/forum?id=9xtE2AgD_Cc), Medical Imaging with Deep Learning (MIDL) 2022.**
 
- Demo: **[ECONet MONAI Label Demo](https://www.youtube.com/watch?v=lQEDCx9Mp7A)**
+ Demo: 
+ <!-- **[ECONet MONAI Label Demo](https://www.youtube.com/watch?v=lQEDCx9Mp7A)** -->
+
+[![link](https://raw.githubusercontent.com/masadcv/ECONet-MONAILabel/main/data/econet_demo.png)](https://www.youtube.com/watch?v=lQEDCx9Mp7A)
 
 #  Introduction
 A challenge when looking at annotating lung lesions associated with COVID-19 is that the lung lesions have large inter-patient variations, with some pathologies having similar visual appearance as healthy lung tissues. This poses a challenge when applying existing semi-automatic interactive segmentation methods for data labelling. To address this, we propose an efficient convolutional neural networks (CNNs) that can be learned online while the annotator provides scribble-based interaction. 
