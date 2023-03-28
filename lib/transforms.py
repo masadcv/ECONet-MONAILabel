@@ -323,7 +323,17 @@ class MakeLikelihoodFromScribblesECONetd(MyInteractiveSegmentationTransform):
 
         # apply ECONet as Fully-Convolutional model to whole volume to infer full volume likelihood
         with torch.no_grad():
-            output_pt = model(image_pt)
+            try:
+                output_pt = model(image_pt)
+            except RuntimeError as e:
+                if "out of memory" not in str(e):
+                    raise RuntimeError(e)
+                logging.info(str(e))
+                logging.info("Not enough memory for online inference")
+                logging.info("Trying inference using CPU (slower)")
+                model = model.to("cpu")
+                output_pt = model(image_pt.to("cpu"))
+
             output_pt = torch.softmax(output_pt, dim=1)
 
         # apply argmax to get predicted label (if needed)
