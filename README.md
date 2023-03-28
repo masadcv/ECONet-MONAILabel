@@ -37,9 +37,9 @@ In addition to ECONet, we include all comparison methods used in our paper. Thes
 ECONet is implemented using [MONAI Label](https://github.com/Project-MONAI/MONAILabel), which is an AI-Assisted tool for developing interactive segmentation methods. We provide the ECONet MONAI Label app that can be run with following steps:
 
 - Clone ECONet repo: `git clone https://github.com/masadcv/ECONet-MONAILabel`
-- Install requirements: `pip install -r requirements.txt`
-- Download and install **3D Slicer Preview Release** from: [https://download.slicer.org/](https://download.slicer.org/)
-- Install **MONAILabel extension** from 3D Slicer Extension Manager
+- Install requirements (recommended in new virtualenv): `pip install -r requirements.txt`
+- Download and install **3D Slicer** from: [https://download.slicer.org/](https://download.slicer.org/)
+- Install **MONAILabel extension** from `plugins` folder as this is using an older version of MONAILabel. For further help follow steps from: TODO Add tutorial to setup plugin
 
 More detailed documentation on setting up MONAI Label can be found at: [https://docs.monai.io/projects/label/en/latest/installation.html](https://docs.monai.io/projects/label/en/latest/installation.html)
 
